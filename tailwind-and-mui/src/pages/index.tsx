@@ -1,7 +1,12 @@
 import Head from 'next/head'
 import { Button } from '@mui/material'
 
-export default function Home() {
+type Props = {
+  darkMode: 'light' | 'dark'
+  toggleDarkMode: () => void
+}
+
+export default function Home({ darkMode, toggleDarkMode }: Props) {
   return (
     <>
       <Head>
@@ -11,8 +16,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='flex items-center m-5 space-x-3'>
-        <p className='text-3xl font-bold underline'>Hello World!</p>
+        <p className='text-3xl font-bold underline text-green-500 dark:text-red-900'>Hello World!</p>
         <Button className='text-xl py-2 font-bold' variant="contained">Contained</Button>
+        <Button className='text-xl py-2 font-bold' variant="contained" onClick={toggleDarkMode}>{darkMode === 'light' ? 'Light' : 'Dark'}</Button>
       </div>
     </>
   )
