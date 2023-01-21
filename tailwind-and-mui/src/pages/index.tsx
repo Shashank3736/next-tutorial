@@ -17,7 +17,6 @@ export default function Home({ darkMode, toggleDarkMode }: Props) {
       </Head>
       <div className='flex items-center m-5 space-x-3'>
         <p className='text-3xl font-bold underline text-green-500 dark:text-red-900'>Hello World!</p>
-        <Button className='text-xl py-2 font-bold' variant="contained">Contained</Button>
         <Button className='text-xl py-2 font-bold' variant="contained" onClick={toggleDarkMode}>{darkMode === 'light' ? 'Light' : 'Dark'}</Button>
       </div>
     </>

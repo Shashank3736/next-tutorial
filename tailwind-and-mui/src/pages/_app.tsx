@@ -4,9 +4,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useEffect, useState } from 'react';
 import { StyledEngineProvider } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [mode, setMode] = useState('light');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const [mode, setMode] = useState(prefersDarkMode ? 'dark' : 'light');
   const theme = createTheme({
     palette: {
       mode: mode === 'light' ? 'light' : 'dark',
