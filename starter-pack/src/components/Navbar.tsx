@@ -1,7 +1,9 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button'
-import { Home, Login } from '@mui/icons-material'
+import Tooltip from '@mui/material/Tooltip'
+import IconButton from '@mui/material/IconButton'
+import { DarkMode, Home, LightMode, Login, SettingsBrightness } from '@mui/icons-material'
 
 const name = 'Shreyash Raj'
 const links = [
@@ -12,7 +14,23 @@ const links = [
     }
 ]
 
+// eslint-disable-next-line react/jsx-key
+const iconMode = [<DarkMode />, <LightMode />, <SettingsBrightness />]
+
 const Navbar = () => {
+    const options = ['dark', 'light', 'none']
+    const [mode, setMode] = useState(options.indexOf(localStorage.getItem('mode') || 'none'))
+
+    function changeMode() {
+        const newMode = options[(mode + 1) % options.length]
+        if(newMode === 'none') {
+            localStorage.removeItem('mode')
+        } else {
+            localStorage.setItem('mode', newMode)
+        }
+        setMode(options.indexOf(newMode))
+        window.dispatchEvent(new StorageEvent('storage', {key: 'mode', newValue: newMode}))
+    }
     return (
         <header>
             <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -27,6 +45,11 @@ const Navbar = () => {
                         )
                     })}
                     <Button className='ml-5' variant='contained' href='/accounts/login' startIcon={<Login />}>Login</Button>
+                    <Tooltip title={options[mode].toUpperCase()}>
+                        <IconButton onClick={changeMode} className='ml-5'>
+                            {iconMode[mode]}
+                        </IconButton>
+                    </Tooltip>
                 </nav>
             </div>
         </header>
